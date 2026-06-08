@@ -20,9 +20,15 @@ export const Navbar = () => {
       )}
     >
       <div className="max-w-5xl mx-auto w-full flex justify-between items-center">
-        <Link href="/" className="flex items-center gap-2">
-          <Image src="/logo.svg" alt="Nexus" width={24} height={24} />
-          <span className="font-semibold text-lg">Nexus</span>
+        <Link href="/" className="flex items-center gap-2 group">
+          <Image
+            src="/logo.svg"
+            alt="Nexus"
+            width={24}
+            height={24}
+            className="transition-transform duration-300 group-hover:rotate-12"
+          />
+          <span className="font-display font-bold text-lg tracking-tight">Nexus</span>
         </Link>
         <SignedOut>
           <div className="flex gap-2">

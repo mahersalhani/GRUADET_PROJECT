@@ -83,8 +83,10 @@ export const ProjectForm = () => {
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className={cn(
-            "relative border p-4 pt-1 rounded-xl bg-sidebar dark:bg-sidebar transition-all",
-            isFocused && "shadow-xs",
+            "relative border p-4 pt-1 rounded-xl bg-sidebar dark:bg-sidebar transition-all duration-300",
+            isFocused
+              ? "border-primary/50 shadow-lg shadow-primary/10 ring-4 ring-primary/10"
+              : "hover:border-primary/30",
           )}
         >
           <FormField
