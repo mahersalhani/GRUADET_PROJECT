@@ -19,7 +19,7 @@ interface UserMessageProps {
 const UserMessage = ({ content }: UserMessageProps) => {
   return (
     <div className="flex justify-end pb-4 pr-2 pl-10">
-      <Card className="rounded-lg bg-muted p-3 shadow-none border-none max-w-[80%] break-words">
+      <Card className="rounded-lg rounded-br-sm bg-muted p-3 shadow-none border border-primary/10 max-w-[80%] break-words hover:border-primary/20">
         {content}
       </Card>
     </div>
@@ -40,9 +40,9 @@ const FragmentCard = ({
   return (
     <button
       className={cn(
-        "flex items-start text-start gap-2 border rounded-lg bg-muted w-fit p-3 hover:bg-secondary transition-colors",
-        isActiveFragment && 
-          "bg-primary text-primary-foreground border-primary hover:bg-primary",
+        "group/fragment flex items-start text-start gap-2 border rounded-lg bg-muted w-fit p-3 transition-all duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-secondary hover:border-primary/40 hover:-translate-y-px hover:shadow-md hover:shadow-primary/10",
+        isActiveFragment &&
+          "bg-primary text-primary-foreground border-primary hover:bg-primary hover:shadow-primary/30",
       )}
       onClick={() => onFragmentClick(fragment)}
     >
@@ -54,7 +54,7 @@ const FragmentCard = ({
         <span className="text-sm">Preview</span>
       </div>
       <div className="flex items-center justify-center mt-0.5">
-        <ChevronRightIcon className="size-4" />
+        <ChevronRightIcon className="size-4 transition-transform duration-200 group-hover/fragment:translate-x-0.5" />
       </div>
     </button>
   );
@@ -86,11 +86,11 @@ const AssistantMessage = ({
   return (
     <div className={cn(
       "flex flex-col group px-2 pb-4",
-      isError && "text-red-700 dark:text-red-500",
+      isError && "text-destructive",
     )}>
       <div className="flex items-center gap-2 pl-2 mb-2">
         <Image
-          src="/logo.svg"
+          src="/logo.png"
           alt="Nexus"
           width={18}
           height={18}
@@ -110,14 +110,14 @@ const AssistantMessage = ({
             variant="outline"
             onClick={onSendErrorToAgent}
             disabled={isSendingError}
-            className="w-fit border-red-200 bg-red-50 text-red-700 hover:bg-red-100 hover:text-red-800 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300 dark:hover:bg-red-950"
+            className="w-fit border-destructive/30 bg-destructive/10 text-destructive hover:bg-destructive/20 hover:text-destructive hover:border-destructive/40"
           >
             {isSendingError ? (
               <Loader2Icon className="size-4 animate-spin" />
             ) : (
               <SendIcon className="size-4" />
             )}
-            Send to agent
+            Let Nexus fix it
           </Button>
         )}
         {fragment && type === "RESULT" && (

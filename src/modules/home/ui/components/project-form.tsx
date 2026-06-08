@@ -20,8 +20,8 @@ import { PROJECT_TEMPLATES } from "../../constants";
 
 const formSchema = z.object({
   value: z.string()
-    .min(1, { message: "Value is required" })
-    .max(10000, { message: "Value is too long" }),
+    .min(1, { message: "Tell Nexus what to build" })
+    .max(10000, { message: "Whoa — that's a bit too long" }),
 })
 
 export const ProjectForm = () => {
@@ -101,7 +101,7 @@ export const ProjectForm = () => {
                 minRows={2}
                 maxRows={8}
                 className="pt-4 resize-none border-none w-full outline-none bg-transparent"
-                placeholder="What would you like to build?"
+                placeholder="Describe your app in a sentence — Nexus takes it from there"
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
                     e.preventDefault();

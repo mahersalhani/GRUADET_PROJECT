@@ -25,8 +25,8 @@ const Page = async ({ params }: Props) => {
 
   return ( 
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ErrorBoundary fallback={<p>Error!</p>}>
-        <Suspense fallback={<p>Loading Project...</p>}>
+      <ErrorBoundary fallback={<p className="p-4 text-sm text-muted-foreground">Something went sideways loading this project.</p>}>
+        <Suspense fallback={<p className="p-4 text-sm text-muted-foreground animate-pulse">Warming up your workspace...</p>}>
           <ProjectView projectId={projectId} />
         </Suspense>
       </ErrorBoundary>

@@ -52,5 +52,5 @@ export const PROJECT_TEMPLATES = [
     title: "Build an event planner",
     prompt:
       "Build an event planning dashboard with schedule overview, speaker cards, venue map section, task checklist, and attendee stats. Use local state for agenda filters, checklist state, and selected sessions. Keep the layout lively but organized, with strong hierarchy and polished interaction details.",
-  }
+  },
 ] as const;

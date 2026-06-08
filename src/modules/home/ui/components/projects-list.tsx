@@ -19,15 +19,26 @@ export const ProjectsList = () => {
   if (!user) return null;
 
   return (
-    <div className="w-full bg-white dark:bg-sidebar rounded-xl p-8 border flex flex-col gap-y-6 sm:gap-y-4">
-      <h2 className="text-2xl font-semibold">
-        {user?.firstName}&apos;s Projects
-      </h2>
+    <div className="w-full bg-white dark:bg-sidebar rounded-xl p-8 border flex flex-col gap-y-6 sm:gap-y-5">
+      <div className="flex items-center justify-between gap-3 border-b pb-4">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
+          {user?.firstName}&apos;s Projects
+        </h2>
+        {!!projects?.length && (
+          <span className="inline-flex items-center justify-center min-w-7 h-7 px-2 rounded-full bg-primary/10 text-primary text-xs font-mono font-semibold border border-primary/20">
+            {projects.length}
+          </span>
+        )}
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         {projects?.length === 0 && (
-          <div className="col-span-full text-center">
-            <p className="text-sm text-muted-foreground">
-              No projects found
+          <div className="col-span-full flex flex-col items-center justify-center gap-2 py-10 text-center">
+            <div className="size-12 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mb-1">
+              <ArrowRightIcon className="size-5 text-primary" />
+            </div>
+            <p className="text-sm font-medium">Nothing here yet</p>
+            <p className="text-xs text-muted-foreground">
+              Type an idea above and ship your first app
             </p>
           </div>
         )}
@@ -41,7 +52,7 @@ export const ProjectsList = () => {
             <Link href={`/projects/${project.id}`}>
               <div className="flex items-center gap-x-4 w-full">
                 <Image
-                  src="/logo.svg"
+                  src="/logo.png"
                   alt="Nexus"
                   width={32}
                   height={32}

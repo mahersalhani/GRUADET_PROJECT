@@ -1,1 +1,60 @@
-<svg id="logo-44" width="41" height="40" viewBox="0 0 41 40" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M20 0C8.9543 0 0 8.9543 0 20C11.0457 20 20 11.0457 20 0Z" fill="#8AB4FF" class="ccustom"></path> <path d="M20 40C31.0457 40 40 31.0457 40 20C28.9543 20 20 28.9543 20 40Z" fill="#8AB4FF" class="ccustom"></path> <path d="M20 0C31.0457 0 40 8.9543 40 20C28.9543 20 20 11.0457 20 0Z" fill="#2F62F4" class="ccompli2"></path> <path d="M20 40C8.9543 40 -9.65645e-07 31.0457 0 20C11.0457 20 20 28.9543 20 40Z" fill="#2F62F4" class="ccompli2"></path> </svg>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2EF3FF" stop-opacity="0.28"/>
+      <stop offset="45%" stop-color="#9147FF" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mainGrad" x1="196" y1="358" x2="830" y2="690" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#10E9FF"/>
+      <stop offset="0.42" stop-color="#1A65FF"/>
+      <stop offset="0.72" stop-color="#8B35FF"/>
+      <stop offset="1" stop-color="#FF4CF2"/>
+    </linearGradient>
+    <linearGradient id="cyanPurple" x1="253" y1="418" x2="738" y2="601" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22F4FF"/>
+      <stop offset="0.5" stop-color="#2978FF"/>
+      <stop offset="1" stop-color="#EA4DFF"/>
+    </linearGradient>
+    <filter id="glow" x="80" y="120" width="864" height="784" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.1 0 0 0 0 0.8 0 0 0 0 1 0 0 0 0.8 0"/>
+      <feBlend in="SourceGraphic" mode="screen"/>
+    </filter>
+    <filter id="softShadow" x="0" y="0" width="1024" height="1024" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="18" stdDeviation="24" flood-color="#5B2BFF" flood-opacity="0.38"/>
+    </filter>
+  </defs>
+
+  <rect width="1024" height="1024" fill="#02030A"/>
+  <circle cx="512" cy="512" r="360" fill="url(#bgGlow)"/>
+
+  <g filter="url(#softShadow)">
+    <!-- outer abstract circular strokes -->
+    <path d="M242 613C181 493 257 345 407 295C560 245 745 309 806 438" stroke="url(#mainGrad)" stroke-width="38" stroke-linecap="round" opacity="0.92"/>
+    <path d="M783 402C842 523 757 675 599 725C454 771 282 718 209 605" stroke="url(#mainGrad)" stroke-width="38" stroke-linecap="round" opacity="0.9"/>
+
+    <!-- orbital ring -->
+    <ellipse cx="512" cy="512" rx="335" ry="118" transform="rotate(-18 512 512)" stroke="url(#cyanPurple)" stroke-width="34" opacity="0.98"/>
+    <ellipse cx="512" cy="512" rx="291" ry="91" transform="rotate(-18 512 512)" stroke="#0B1028" stroke-width="18" opacity="0.5"/>
+
+    <!-- stylized N -->
+    <path d="M348 675V344H437L590 543V344H696V675H607L454 477V675H348Z" fill="url(#mainGrad)"/>
+    <path d="M405 625V406L621 676H610L405 625Z" fill="#090B1D" opacity="0.38"/>
+    <path d="M454 344L607 543V344H696V675H607L454 477V344Z" fill="url(#cyanPurple)" opacity="0.78"/>
+
+    <!-- cut details -->
+    <path d="M399 402L451 402L451 548L399 482V402Z" fill="#07102A" opacity="0.46"/>
+    <path d="M619 408H668V568L619 508V408Z" fill="#07102A" opacity="0.46"/>
+
+    <!-- glowing spheres -->
+    <circle cx="235" cy="450" r="43" fill="url(#cyanPurple)" filter="url(#glow)"/>
+    <circle cx="790" cy="575" r="43" fill="url(#mainGrad)" filter="url(#glow)"/>
+    <circle cx="218" cy="435" r="13" fill="#D9FFFF" opacity="0.9"/>
+    <circle cx="774" cy="558" r="13" fill="#FFE6FF" opacity="0.9"/>
+
+    <!-- highlights -->
+    <path d="M276 416C333 333 461 298 581 315" stroke="#76F7FF" stroke-width="9" stroke-linecap="round" opacity="0.58"/>
+    <path d="M758 389C818 505 738 644 596 693" stroke="#FF87FA" stroke-width="9" stroke-linecap="round" opacity="0.58"/>
+  </g>
+</svg>
