@@ -11,7 +11,10 @@ import {
 } from "@inngest/agent-kit";
 
 import { prisma } from "@/lib/db";
-import { normalizeGeneratedFiles } from "@/lib/generated-files";
+import {
+  normalizeGeneratedFiles,
+  parseGeneratedFiles,
+} from "@/lib/generated-files";
 import { FRAGMENT_TITLE_PROMPT, PROMPT, RESPONSE_PROMPT } from "@/prompt";
 
 import { inngest } from "./client";
@@ -28,10 +31,9 @@ interface AgentState {
 }
 
 const SANDBOX_UTILS_FILE = `import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+  return clsx(inputs);
 }
 `;
 
@@ -48,6 +50,27 @@ export const codeAgentFunction = inngest.createFunction(
   { event: "code-agent/run" },
   async ({ event, step }) => {
     try {
+      const previousFiles = await step.run(
+        "get-previous-fragment-files",
+        async () => {
+          const latestFragment = await prisma.fragment.findFirst({
+            where: {
+              message: {
+                projectId: event.data.projectId,
+              },
+            },
+            orderBy: {
+              createdAt: "desc",
+            },
+            select: {
+              files: true,
+            },
+          });
+
+          return parseGeneratedFiles(latestFragment?.files ?? null);
+        },
+      );
+
       const sandboxId = await step.run("get-sandbox-id", async () => {
         const sandbox = await Sandbox.create("nexus-nextjs-template");
         await sandbox.setTimeout(SANDBOX_TIMEOUT);
@@ -62,6 +85,23 @@ export const codeAgentFunction = inngest.createFunction(
         } catch {
           await sandbox.files.write("lib/utils.ts", SANDBOX_UTILS_FILE);
         }
+      });
+
+      await step.run("restore-previous-files", async () => {
+        if (!previousFiles || Object.keys(previousFiles).length === 0) {
+          return;
+        }
+
+        const sandbox = await getSandbox(sandboxId);
+
+        for (const [path, content] of Object.entries(previousFiles)) {
+          await sandbox.files.write(path, content);
+        }
+      });
+
+      await step.run("enforce-sandbox-utils-file", async () => {
+        const sandbox = await getSandbox(sandboxId);
+        await sandbox.files.write("lib/utils.ts", SANDBOX_UTILS_FILE);
       });
 
       const previousMessages = await step.run(
@@ -94,7 +134,7 @@ export const codeAgentFunction = inngest.createFunction(
       const state = createState<AgentState>(
         {
           summary: "",
-          files: {},
+          files: previousFiles ?? {},
         },
         {
           messages: previousMessages,
@@ -106,10 +146,10 @@ export const codeAgentFunction = inngest.createFunction(
         description: "An expert coding agent",
         system: PROMPT,
         model: openai({
-          model: "gpt-4.1",
-          defaultParameters: {
-            temperature: 0.1,
-          },
+          model: "gpt-5-mini",
+          // defaultParameters: {
+          //   temperature: 0.1,
+          // },
         }),
         tools: [
           createTool({
@@ -236,7 +276,9 @@ export const codeAgentFunction = inngest.createFunction(
       });
 
       const result = await network.run(event.data.value, { state });
-      const normalizedFiles = normalizeGeneratedFiles(result.state.data.files || {});
+      const normalizedFiles = normalizeGeneratedFiles(
+        result.state.data.files || {},
+      );
       const normalizedFileEntries = Object.entries(normalizedFiles).filter(
         ([path, content]) => result.state.data.files?.[path] !== content,
       );
@@ -293,7 +335,8 @@ export const codeAgentFunction = inngest.createFunction(
           return await prisma.message.create({
             data: {
               projectId: event.data.projectId,
-              content: "The agent could not produce a valid result. Please send this error back to the agent.",
+              content:
+                "The agent could not produce a valid result. Please send this error back to the agent.",
               role: "ASSISTANT",
               type: "ERROR",
             },

@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import {
   getPreviewErrorDiagnostics,
   normalizeGeneratedFiles,
+  parseGeneratedFiles,
 } from "./generated-files";
 
 test("diagnoses generated interactive page files without use client", () => {
@@ -87,4 +88,55 @@ export default function Page() {
     files["app/page.tsx"],
     `"use client";\n\nimport { HomeIcon } from "lucide-react";\n\nexport default function Page() {\n  return <button onClick={() => window.alert("hi")}><HomeIcon /></button>;\n}\n`,
   );
+});
+
+test("normalizes malformed and duplicated use client directives", () => {
+  const files = normalizeGeneratedFiles({
+    "app/page.tsx": `"use client";,
+
+use client
+
+import { useState } from "react";
+
+export default function Page() {
+  const [count] = useState(0);
+  return <p>{count}</p>;
+}
+`,
+  });
+
+  assert.equal(
+    files["app/page.tsx"],
+    `"use client";\n\nimport { useState } from "react";\n\nexport default function Page() {\n  const [count] = useState(0);\n  return <p>{count}</p>;\n}\n`,
+  );
+});
+
+test("parses generated file snapshots from persisted fragment JSON", () => {
+  const files = parseGeneratedFiles({
+    "app/page.tsx": `export default function Page() {
+  return <main>Hello</main>;
+}
+`,
+    "app/widget.tsx": `export function Widget() {
+  return <div />;
+}
+`,
+  });
+
+  assert.deepEqual(files, {
+    "app/page.tsx": `export default function Page() {
+  return <main>Hello</main>;
+}
+`,
+    "app/widget.tsx": `export function Widget() {
+  return <div />;
+}
+`,
+  });
+});
+
+test("rejects invalid generated file snapshots", () => {
+  assert.equal(parseGeneratedFiles(null), null);
+  assert.equal(parseGeneratedFiles(["app/page.tsx"]), null);
+  assert.equal(parseGeneratedFiles({ "app/page.tsx": 123 }), null);
 });

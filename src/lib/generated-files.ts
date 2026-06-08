@@ -24,6 +24,8 @@ const BROWSER_API_RE =
 const JSX_EVENT_HANDLER_RE = /\son[A-Z][A-Za-z]+\s*=/;
 const STANDALONE_CLIENT_DIRECTIVE_LINE_RE =
   /^[^\S\r\n]*(['"])use client\1;?[^\S\r\n]*$/gm;
+const STANDALONE_CLIENT_DIRECTIVE_VARIANT_LINE_RE =
+  /^[^\S\r\n]*['"]?\s*use client\s*['"]?\s*;?\s*,?[^\S\r\n]*$/gim;
 
 export function hasUseClientDirective(content: string) {
   return CLIENT_DIRECTIVE_RE.test(content);
@@ -40,6 +42,7 @@ export function requiresClientDirective(content: string) {
 
 export function addUseClientDirective(content: string) {
   const contentWithoutClientDirectives = content
+    .replace(STANDALONE_CLIENT_DIRECTIVE_VARIANT_LINE_RE, "")
     .replace(STANDALONE_CLIENT_DIRECTIVE_LINE_RE, "")
     .replace(/\n{3,}/g, "\n\n")
     .replace(/^\s+/, "");
@@ -67,6 +70,20 @@ export function normalizeGeneratedFiles(files: GeneratedFiles) {
         : content,
     ]),
   );
+}
+
+export function parseGeneratedFiles(value: unknown): GeneratedFiles | null {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return null;
+  }
+
+  const entries = Object.entries(value);
+
+  if (entries.some(([, content]) => typeof content !== "string")) {
+    return null;
+  }
+
+  return Object.fromEntries(entries) as GeneratedFiles;
 }
 
 export function getPreviewErrorDiagnostics(files: GeneratedFiles | null) {

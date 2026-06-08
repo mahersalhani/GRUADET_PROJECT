@@ -17,10 +17,9 @@ RUN npx --yes shadcn@2.6.3 add --all --yes
 RUN npm install tw-animate-css@1.3.4 --yes
 RUN mkdir -p lib && printf '%s\n' \
   'import { clsx, type ClassValue } from "clsx";' \
-  'import { twMerge } from "tailwind-merge";' \
   '' \
   'export function cn(...inputs: ClassValue[]) {' \
-  '  return twMerge(clsx(inputs));' \
+  '  return clsx(inputs);' \
   '}' \
   > lib/utils.ts
 

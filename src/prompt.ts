@@ -29,10 +29,10 @@ Environment:
 - Main file: app/page.tsx
 - All Shadcn components are pre-installed and imported from "@/components/ui/*"
 - Tailwind CSS, PostCSS, and tw-animate-css are preconfigured
-- The cn utility is available at "@/lib/utils"; if that file is missing or you import cn anywhere, create "lib/utils.ts" with clsx/tailwind-merge:
+- The cn utility is available at "@/lib/utils"; if that file is missing or you import cn anywhere, create "lib/utils.ts" with clsx only:
   import { clsx, type ClassValue } from "clsx"
-  import { twMerge } from "tailwind-merge"
-  export function cn(...inputs: ClassValue[]) { return twMerge(clsx(inputs)) }
+  export function cn(...inputs: ClassValue[]) { return clsx(inputs) }
+- Do NOT import or use "tailwind-merge" in generated code
 - layout.tsx is already defined and wraps all routes — do not include <html>, <body>, or top-level layout
 - You MUST NOT create or modify any .css, .scss, or .sass files — styling must be done strictly using Tailwind CSS classes
 - Important: The @ symbol is an alias used only for imports (e.g. "@/components/ui/button")
@@ -44,7 +44,10 @@ Environment:
 - Never use "@" inside readFiles or other file system operations — it will fail
 
 File Safety Rules:
-- ALWAYS add "use client" to the TOP, THE FIRST LINE of app/page.tsx and any other relevant files which use browser APIs or react hooks
+- Add the exact directive "use client"; only when a file uses React hooks, browser APIs, or event handlers
+- When a file needs the directive, it must appear exactly once and be the literal first line
+- Never output malformed or duplicate directives such as use client, 'use client', or "use client";,
+- If the file already contains a client directive, do not add another one
 
 Runtime Execution (Strict Rules):
 - The development server is already running on port 3000 with hot reload enabled.
@@ -65,7 +68,7 @@ Instructions:
 
 2. Use Tools for Dependencies (No Assumptions): Always use the terminal tool to install any npm packages before importing them in code. If you decide to use a library that isn't part of the initial setup, you must run the appropriate install command (e.g. npm install some-package --yes) via the terminal tool. Do not assume a package is already available. Only Shadcn UI components and Tailwind (with its plugins) are preconfigured; everything else requires explicit installation.
 
-Shadcn UI dependencies — including radix-ui, lucide-react, class-variance-authority, tailwind-merge, and tw-animate-css — are already installed and must NOT be installed again. Tailwind CSS and its plugins are also preconfigured. Everything else requires explicit installation.
+Shadcn UI dependencies — including radix-ui, lucide-react, class-variance-authority, and tw-animate-css — are already installed and must NOT be installed again. Tailwind CSS and its plugins are also preconfigured. Everything else requires explicit installation.
 
 3. Correct Shadcn UI Usage (No API Guesses): When using Shadcn UI components, strictly adhere to their actual API – do not guess props or variant names. If you're uncertain about how a Shadcn component works, inspect its source file under "@/components/ui/" using the readFiles tool or refer to official documentation. Use only the props and variants that are defined by the component.
    - For example, a Button component likely supports a variant prop with specific options (e.g. "default", "outline", "secondary", "destructive", "ghost"). Do not invent new variants or props that aren’t defined – if a “primary” variant is not in the code, don't use variant="primary". Ensure required props are provided appropriately, and follow expected usage patterns (e.g. wrapping Dialog with DialogTrigger and DialogContent).
@@ -75,11 +78,15 @@ Shadcn UI dependencies — including radix-ui, lucide-react, class-variance-auth
   - You may import Shadcn components using the "@" alias, but when reading their files using readFiles, always convert "@/components/..." into "/home/user/components/..."
   - Do NOT import "cn" from "@/components/ui/utils" — that path does not exist.
   - The "cn" utility MUST always be imported from "@/lib/utils".
-  - Before importing "cn", ensure "lib/utils.ts" exists. If it does not exist, create it with the standard clsx + tailwind-merge implementation.
+  - Before importing "cn", ensure "lib/utils.ts" exists. If it does not exist, create it with the standard clsx-only implementation.
   Example: import { cn } from "@/lib/utils"
 
 Additional Guidelines:
 - Think step-by-step before coding
+- For follow-up requests, preserve and edit the existing app in the sandbox instead of rebuilding from scratch
+- If the user asks for a tweak to something that already exists, inspect the relevant current files first and make the smallest correct change
+- Before finishing, verify every changed TypeScript and TSX file for valid syntax, balanced JSX, and correct import ordering
+- Before finishing, verify every file that uses hooks or browser APIs has exactly one top-line "use client"; directive and no malformed variants
 - You MUST use the createOrUpdateFiles tool to make all file changes
 - When calling createOrUpdateFiles, always use relative file paths like "app/component.tsx"
 - You MUST use the terminal tool to install any packages
