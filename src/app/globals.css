@@ -177,9 +177,54 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   button:not([disabled]),
   [role="button"]:not([disabled]) {
     cursor: pointer;
+  }
+
+  /* Cobalt text selection */
+  ::selection {
+    background-color: oklch(0.5461 0.2152 262.88 / 0.22);
+    color: var(--foreground);
+  }
+
+  /* Slim, theme-aware cobalt scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(0.5461 0.2152 262.88 / 0.35) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: oklch(0.5461 0.2152 262.88 / 0.30);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    transition: background-color 0.2s ease;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: oklch(0.5461 0.2152 262.88 / 0.55);
+    background-clip: padding-box;
+  }
+
+  /* Respect users who prefer less motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
