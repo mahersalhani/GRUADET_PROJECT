@@ -3,15 +3,15 @@ import { useState, useEffect } from "react";
 
 const ShimmerMessages = () => {
   const messages = [
-    "Thinking...",
-    "Loading...",
-    "Generating...",
-    "Analyzing your request...",
-    "Building your website...",
-    "Crafting components...",
-    "Optimizing layout...",
-    "Adding final touches...",
-    "Almost ready...",
+    "Reading your mind...",
+    "Spinning up agents...",
+    "Sketching the blueprint...",
+    "Writing the code...",
+    "Wiring up components...",
+    "Polishing the pixels...",
+    "Tightening the layout...",
+    "Almost showtime...",
+    "Shipping it...",
   ];
 
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
@@ -38,7 +38,7 @@ export const MessageLoading = () => {
     <div className="flex flex-col group px-2 pb-4">
       <div className="flex items-center gap-2 pl-2 mb-2">
         <Image
-          src="/logo.svg"
+          src="/logo.png"
           alt="Nexus"
           width={18}
           height={18}

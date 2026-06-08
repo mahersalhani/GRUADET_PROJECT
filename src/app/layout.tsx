@@ -27,9 +27,9 @@ const monoFont = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nexus — Build software by talking to AI",
+  title: "Nexus — Type an idea. Ship an app.",
   description:
-    "Nexus turns plain-language ideas into live, running web apps. Describe it, watch agents build it, ship it.",
+    "Dream it, type it, watch it ship. Nexus turns a single sentence into a live, running web app — built by AI agents in seconds.",
 };
 
 export default function RootLayout({

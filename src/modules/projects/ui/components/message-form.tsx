@@ -21,8 +21,8 @@ interface Props {
 
 const formSchema = z.object({
   value: z.string()
-    .min(1, { message: "Value is required" })
-    .max(10000, { message: "Value is too long" }),
+    .min(1, { message: "Tell Nexus what to build next" })
+    .max(10000, { message: "Whoa — that's a bit too long" }),
 })
 
 export const MessageForm = ({ projectId }: Props) => {
@@ -81,8 +81,10 @@ export const MessageForm = ({ projectId }: Props) => {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className={cn(
-          "relative border p-4 pt-1 rounded-xl bg-sidebar dark:bg-sidebar transition-all",
-          isFocused && "shadow-xs",
+          "relative border p-4 pt-1 rounded-xl bg-sidebar dark:bg-sidebar transition-all duration-300",
+          isFocused
+            ? "border-primary/50 shadow-lg shadow-primary/10 ring-4 ring-primary/10"
+            : "hover:border-primary/30",
           showUsage && "rounded-t-none",
         )}
       >
@@ -98,7 +100,7 @@ export const MessageForm = ({ projectId }: Props) => {
               minRows={2}
               maxRows={8}
               className="pt-4 resize-none border-none w-full outline-none bg-transparent"
-              placeholder="What would you like to build?"
+              placeholder="What should we build next?"
               onKeyDown={(e) => {
                 if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
                   e.preventDefault();

@@ -40,13 +40,13 @@ export const ProjectView = ({ projectId }: Props) => {
           minSize={20}
           className="flex flex-col min-h-0"
         >
-          <ErrorBoundary fallback={<p>Project header error</p>}>
-            <Suspense fallback={<p>Loading project...</p>}>
+          <ErrorBoundary fallback={<p className="p-2 text-sm text-muted-foreground">Couldn&apos;t load the header.</p>}>
+            <Suspense fallback={<p className="p-2 text-sm text-muted-foreground animate-pulse">Loading...</p>}>
               <ProjectHeader projectId={projectId} />
             </Suspense>
           </ErrorBoundary>
-          <ErrorBoundary fallback={<p>Messages container error</p>}>
-            <Suspense fallback={<p>Loading messages...</p>}>
+          <ErrorBoundary fallback={<p className="p-2 text-sm text-muted-foreground">Couldn&apos;t load the conversation.</p>}>
+            <Suspense fallback={<p className="p-2 text-sm text-muted-foreground animate-pulse">Loading the conversation...</p>}>
               <MessagesContainer
                 projectId={projectId}
                 activeFragment={activeFragment}
@@ -66,8 +66,14 @@ export const ProjectView = ({ projectId }: Props) => {
             value={tabState}
             onValueChange={(value) => setTabState(value as "preview" | "code")}
           >
-            <div className="w-full flex items-center p-2 border-b gap-x-2">
-              <TabsList className="h-8 p-0 border rounded-md">
+            <div className="relative w-full flex items-center p-2 border-b">
+              <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground uppercase tracking-[0.15em] pl-1">
+                <span className="size-1.5 rounded-full bg-primary animate-pulse" />
+                <span className="hidden sm:inline">
+                  {tabState === "preview" ? "Live preview" : "Source"}
+                </span>
+              </div>
+              <TabsList className="h-8 p-0 border rounded-md absolute left-1/2 -translate-x-1/2">
                 <TabsTrigger value="preview" className="rounded-md">
                   <EyeIcon /> <span>Demo</span>
                 </TabsTrigger>

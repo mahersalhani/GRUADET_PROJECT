@@ -55,7 +55,7 @@ export function FragmentWeb({ data, projectId }: Props) {
           trpc.usage.status.queryOptions(),
         ),
       ]);
-      toast.success("Preview error sent to agent");
+      toast.success("On it — Nexus is fixing the error");
     },
     onError: (error) => {
       toast.error(error.message);
@@ -91,7 +91,7 @@ export function FragmentWeb({ data, projectId }: Props) {
             <RefreshCcwIcon />
           </Button>
         </Hint>
-        <Hint text="Send error details to agent" side="bottom" align="start">
+        <Hint text="Send the error to Nexus" side="bottom" align="start">
           <Button
             size="sm"
             variant="outline"
@@ -106,7 +106,7 @@ export function FragmentWeb({ data, projectId }: Props) {
             <span className="hidden lg:inline">Send error</span>
           </Button>
         </Hint>
-        <Hint text="Click to copy" side="bottom">
+        <Hint text="Copy preview URL" side="bottom">
           <Button 
             size="sm" 
             variant="outline" 

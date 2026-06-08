@@ -14,16 +14,18 @@ const Page = () => {
       <section className="space-y-6 pt-[16vh] 2xl:pt-48">
         <div className="flex flex-col items-center">
           <Image 
-            src="/logo.svg"
+            src="/logo.png"
             alt="Nexus"
             width={50}
             height={50}
             className="hidden md:block"
           />
         </div>
-        <h1 className="text-xl md:text-3xl font-bold text-center">Pricing</h1>
+        <h1 className="font-display text-2xl md:text-4xl font-bold text-center tracking-tight">
+          Pick your <span className="text-gradient-blue">superpower</span>
+        </h1>
         <p className="text-muted-foreground text-center text-sm md:text-base">
-          Choose the plan that fits your needs
+          Start free. Scale up the moment you&apos;re ready to ship more.
         </p>
         <PricingTable
           appearance={{

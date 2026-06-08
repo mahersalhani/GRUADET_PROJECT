@@ -44,7 +44,7 @@ export const MessagesContainer = ({
           trpc.usage.status.queryOptions(),
         ),
       ]);
-      toast.success("Error sent to agent");
+      toast.success("Sent to Nexus — fixing it now");
     },
     onError: (error) => {
       toast.error(error.message);
