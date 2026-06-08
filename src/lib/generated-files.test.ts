@@ -52,7 +52,7 @@ export default function Page() {
   });
 
   assert.deepEqual(diagnostics, [
-    `app/page.tsx has "use client"; on line 3, but Next.js requires the directive to be the first line before imports or other expressions.`,
+    `app/page.tsx has "use client"; on line 3, but the app requires the directive to be the first line before imports or other expressions.`,
   ]);
 });
 

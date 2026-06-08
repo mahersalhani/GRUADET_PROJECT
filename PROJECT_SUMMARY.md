@@ -1,8 +1,8 @@
-# VIBE - Project Summary
+# nexus - Project Summary
 
 ## 📋 PROJECT OVERVIEW
 
-**Vibe** is an AI-powered development platform that enables users to create web applications by conversing with intelligent AI agents. The system dynamically generates Next.js applications in real-time sandboxes, providing a live preview and code editing interface. This is essentially an "AI-powered app builder" where users describe what they want, and AI agents build it for them in isolated environments.
+**nexuss** is an AI-powered development platform that enables users to create web applications by conversing with intelligent AI agents. The system dynamically generates applications in real-time sandboxes, providing a live preview and code editing interface. This is essentially an "AI-powered app builder" where users describe what they want, and AI agents build it for them in isolated environments.
 
 ### Core Value Proposition
 
@@ -230,7 +230,7 @@ User (Clerk)
 
 ```
 get-sandbox-id
-├── Create E2B Sandbox (vibe-nextjs-test-2 template)
+├── Create E2B Sandbox (nexuss template)
 ├── Set 30-minute timeout
 └── Return sandboxId
 ```
@@ -408,7 +408,7 @@ try {
 
 ```
 - Logo
-- Hero Section ("Build something with Vibe")
+- Hero Section ("Build something with nexuss")
 - Project Form (chat input)
 - Projects List (paginated)
 ```
@@ -909,7 +909,7 @@ Time: Instant
 
 ## 🎓 Key Takeaways
 
-**Vibe** is a sophisticated full-stack AI application that:
+**nexuss** is a sophisticated full-stack AI application that:
 
 1. **Accepts natural language** requests from users
 2. **Delegates to AI agents** for code generation

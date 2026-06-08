@@ -1,11 +1,11 @@
-# Vibe
+# nexuss
 
 AI-powered development platform that lets you create web applications by chatting with AI agents in real-time sandboxes.
 
 ## Features
 
 - 🤖 AI-powered code generation with AI agents
-- 💻 Real-time Next.js application development in E2B sandboxes
+- 💻 Real-time Nexus application development in E2B sandboxes
 - 🔄 Live preview & code preview with split-pane interface
 - 📁 File explorer with syntax highlighting and code theme
 - 💬 Conversational project development with message history
@@ -59,7 +59,7 @@ e2b template build --name your-template-name --cmd "/compile_page.sh"
 After building the template, update the template name in `src/inngest/functions.ts`:
 
 ```typescript
-// Replace "vibe-nextjs-test-2" with your template name
+// Replace tnexusample template name with your actual template name
 const sandbox = await Sandbox.create("your-template-name");
 ```
 

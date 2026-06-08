@@ -105,7 +105,7 @@ export function getPreviewErrorDiagnostics(files: GeneratedFiles | null) {
 
       if (directiveLine) {
         return [
-          `${path} has "use client"; on line ${directiveLine}, but Next.js requires the directive to be the first line before imports or other expressions.`,
+          `${path} has "use client"; on line ${directiveLine}, but the app requires the directive to be the first line before imports or other expressions.`,
         ];
       }
 
